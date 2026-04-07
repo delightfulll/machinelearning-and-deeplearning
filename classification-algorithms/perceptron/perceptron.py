@@ -9,11 +9,14 @@ class Perceptron:
     def fit(self, X, y):
         #generate random numbers using the state
         rgen = np.random.RandomState(self.random_state)
-        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=X.shape[0])
-        self.b_ = np.float(0.)
+
+        #generate random weights in normal distribution
+        self.w_ = rgen.normal(loc=0.0, scale=0.01, size=X.shape[1])
+        self.b_ = np.float64(0.)
         self.errors_ = []
         
-        for _ in range(self.eta):
+        #loop over the number of iterations
+        for _ in range(self.n_iter):
             #keep track of the error
             error = 0
             for xi, target in zip(X, y):
@@ -32,11 +35,15 @@ class Perceptron:
 
 
     def net_input(self, X):
+        
         return np.dot(X, self.w_) + self.b_
     
     #predicts the ouput y for that input of x
     def predict(self, X):
         #return the decisions for the preceptron
         return np.where(self.net_input(X) >= 0.0, 1, 0)
+    
+
+        
 
 
